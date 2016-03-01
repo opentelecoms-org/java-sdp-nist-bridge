@@ -2,29 +2,40 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <groupId>org.jitsi</groupId>
-    <artifactId>jitsi-universe</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <relativePath>../jitsi-universe/pom.xml</relativePath>
-  </parent>
-
+  <groupId>org.opentelecoms.sdp</groupId>
   <artifactId>java-sdp-nist-bridge</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>bundle</packaging>
 
   <name>java-sdp-nist-bridge</name>
-  <url>https://jitsi.org</url>
+  <description>An SdpFactory binding the free OpenTelecoms javax.sdp API with the free NIST reference implementation.</description>
+  <url>https://github.com/opentelecoms-org/java-sdp-nist-bridge</url>
+
+  <licenses>
+    <license>
+      <name>Apache Software License v2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection>scm:git:git@github.com:opentelecoms-org/java-sdp-nist-bridge.git</connection>
+    <url>scm:git:git@github.com:opentelecoms-org/java-sdp-nist-bridge.git</url>
+    <developerConnection>scm:git:git@github.com:opentelecoms-org/java-sdp-nist-bridge.git</developerConnection>
+  </scm>
+  <developers>
+    <developer>
+      <id>ibauersachs</id>
+      <name>Ingo Bauersachs</name>
+      <email>ingo@jitsi.org</email>
+    </developer>
+  </developers>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
-  <description>An SdpFactory binding the free OpenTelecoms javax.sdp API with the free NIST reference implementation.</description>
-  <organization>
-    <name>jitsi.org</name>
-    <url>https://jitsi.org</url>
-  </organization>
   <dependencies>
     <dependency>
       <groupId>org.opentelecoms.sdp</groupId>
@@ -38,11 +49,23 @@
     </dependency>
   </dependencies>
 
+  <distributionManagement>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+    <repository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+  </distributionManagement>
+
   <build>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.5.1</version>
         <configuration>
           <source>1.5</source>
           <target>1.5</target>
@@ -51,7 +74,39 @@
       <plugin>
         <groupId>org.apache.felix</groupId>
         <artifactId>maven-bundle-plugin</artifactId>
+        <version>3.0.1</version>
+        <extensions>true</extensions>
       </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <id>release-sign-artifacts</id>
+      <activation>
+        <property>
+          <name>performRelease</name>
+          <value>true</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>1.6</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>

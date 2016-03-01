@@ -1,4 +1,4 @@
-package org.jitsi.javax.sdp;
+package org.opentelecoms.javax.sdp;
 
 import java.net.InetAddress;
 import java.net.URL;
