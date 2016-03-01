@@ -19,7 +19,7 @@ import gov.nist.javax.sdp.parser.*;
  * 
  * @author Ingo Bauersachs
  */
-public class NistSdpFactory extends SdpFactory {
+public class NistSdpFactory implements SdpFactory {
 
     public SessionDescription createSessionDescription() throws SdpException {
         SessionDescriptionImpl sd = new SessionDescriptionImpl();
@@ -321,5 +321,17 @@ public class NistSdpFactory extends SdpFactory {
         }
 
         return z;
+    }
+
+    public Date getDateFromNtp(long ntpTime) {
+        return new Date((ntpTime - SdpConstants.NTP_CONST) * 1000);
+    }
+
+    public long getNtpTime(Date d) throws SdpParseException {
+        if (d == null) {
+            return -1;
+        }
+
+        return ((d.getTime() / 1000) + SdpConstants.NTP_CONST);
     }
 }
