@@ -20,9 +20,9 @@
   </licenses>
 
   <scm>
-    <connection>scm:git:git@github.com:opentelecoms-org/java-sdp-nist-bridge.git</connection>
-    <url>scm:git:git@github.com:opentelecoms-org/java-sdp-nist-bridge.git</url>
-    <developerConnection>scm:git:git@github.com:opentelecoms-org/java-sdp-nist-bridge.git</developerConnection>
+    <connection>scm:git:https://github.com/opentelecoms-org/java-sdp-nist-bridge.git</connection>
+    <url>https://github.com/opentelecoms-org/java-sdp-nist-bridge.git</url>
+    <developerConnection>scm:git:https://github.com/opentelecoms-org/java-sdp-nist-bridge.git</developerConnection>
   </scm>
   <developers>
     <developer>
