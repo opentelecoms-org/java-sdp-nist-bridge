@@ -206,6 +206,8 @@ public class NistSdpFactory implements SdpFactory {
         o.setSessionId(sessionId);
         o.setSessionVersion(sessionVersion);
         o.setNetworkType(networkType);
+        o.setAddressType(addrType);
+        o.setAddress(address);
         return o;
     }
 
