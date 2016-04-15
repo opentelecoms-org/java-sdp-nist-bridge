@@ -45,7 +45,7 @@
     <dependency>
       <groupId>org.jitsi</groupId>
       <artifactId>jain-sip-ri-ossonly</artifactId>
-      <version>1.2.98c7f8c-jitsi-oss1</version>
+      <version>1.2.279-jitsi-oss1</version>
     </dependency>
   </dependencies>
 
