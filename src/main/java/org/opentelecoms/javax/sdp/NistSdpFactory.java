@@ -41,11 +41,10 @@ public class NistSdpFactory implements SdpFactory {
         sd.setVersion(this.createVersion(0));
 
         try {
-            sd.setOrigin(this.createOrigin("user", InetAddress.getLocalHost().toString()));
+            sd.setOrigin(this.createOrigin("user", InetAddress.getLocalHost().getHostAddress()));
         }
         catch (UnknownHostException e) {
             e.printStackTrace();
-            return null;
         }
 
         sd.setSessionName(this.createSessionName("-"));
@@ -64,7 +63,7 @@ public class NistSdpFactory implements SdpFactory {
         }
         catch (ParseException e) {
             e.printStackTrace();
-            return null;
+            throw new SdpParseException(0, e.getErrorOffset(), e.getMessage());
         }
     }
 
@@ -103,7 +102,6 @@ public class NistSdpFactory implements SdpFactory {
         }
         catch (SdpException e) {
             e.printStackTrace();
-            return null;
         }
 
         return i;
@@ -116,7 +114,6 @@ public class NistSdpFactory implements SdpFactory {
         }
         catch (SdpException e) {
             e.printStackTrace();
-            return null;
         }
 
         return p;
@@ -129,7 +126,6 @@ public class NistSdpFactory implements SdpFactory {
         }
         catch (SdpException e1) {
             e1.printStackTrace();
-            return null;
         }
 
         return e;
@@ -148,7 +144,6 @@ public class NistSdpFactory implements SdpFactory {
         }
         catch (SdpException e) {
             e.printStackTrace();
-            return null;
         }
 
         return sn;
@@ -196,6 +191,8 @@ public class NistSdpFactory implements SdpFactory {
         OriginField o = new OriginField();
         o.setUsername(userName);
         o.setAddress(address);
+        o.setNetworkType(SDPKeywords.IN);
+        o.setAddressType(SDPKeywords.IPV4);
         return o;
     }
 
@@ -239,7 +236,6 @@ public class NistSdpFactory implements SdpFactory {
         }
         catch (SdpException e) {
             e.printStackTrace();
-            return null;
         }
 
         return md;
@@ -279,9 +275,10 @@ public class NistSdpFactory implements SdpFactory {
     }
 
     public Connection createConnection(String netType, String addrType, String addr) throws SdpException {
-        Connection c = createConnection(addr);
+        Connection c = new ConnectionField();
         c.setNetworkType(netType);
         c.setAddressType(addrType);
+        c.setAddress(addr);
         return c;
     }
 
@@ -294,9 +291,7 @@ public class NistSdpFactory implements SdpFactory {
     }
 
     public Connection createConnection(String addr) throws SdpException {
-        Connection c = new ConnectionField();
-        c.setAddress(addr);
-        return c;
+        return createConnection(SDPKeywords.IN, SDPKeywords.IPV4, addr);
     }
 
     public Time createTime(Date start, Date stop) throws SdpException {
@@ -319,7 +314,6 @@ public class NistSdpFactory implements SdpFactory {
         }
         catch (SdpException e) {
             e.printStackTrace();
-            return null;
         }
 
         return rt;
@@ -327,14 +321,13 @@ public class NistSdpFactory implements SdpFactory {
 
     public TimeZoneAdjustment createTimeZoneAdjustment(Date d, int offset) {
         ZoneField z = new ZoneField();
-        Hashtable<Date, Integer> t = new Hashtable<Date, Integer>(1);
-        t.put(d, offset);
         try {
+            Hashtable<Date, Integer> t = new Hashtable<Date, Integer>(1);
+            t.put(d, offset);
             z.setZoneAdjustments(t);
         }
         catch (SdpException e) {
             e.printStackTrace();
-            return null;
         }
 
         return z;
